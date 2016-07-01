@@ -1,4 +1,4 @@
-angular.module('conFusion', ['ionic', 'conFusion.controllers'])
+angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.services'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
 
@@ -13,7 +13,8 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers'])
             url: '/home',
             views: {
                 'mainContent': {
-                    templateUrl: 'templates/home.html'
+                    templateUrl: 'templates/home.html',
+                  controller: 'IndexController'
                 }
             }
         })
