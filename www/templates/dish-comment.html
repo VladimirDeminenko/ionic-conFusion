@@ -1,0 +1,42 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Submit Comment on Dish</h1>
+    <div class="buttons">
+      <button class="button button-clear button-stable" ng-click="closeNewComment()">Close</button>
+    </div>
+  </ion-header-bar>
+
+  <form ng-submit="newCommentSubmit()">
+    <ion-content>
+      <div class="list">
+        <label class="item item-input item-select">
+          <span>Rating</span>
+          <span class="col col-offset-75">
+            <select ng-model="comment.rating">
+              <option selected>{{comment.rating}}</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </span>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Your Name</span>
+          <input type="text" ng-model="comment.author">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Your Comment</span>
+          <textarea rows="2" ng-model="comment.comment"></textarea>
+        </label>
+
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+    </ion-content>
+  </form>
+</ion-modal-view>

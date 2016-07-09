@@ -170,7 +170,7 @@ angular.module('conFusion.controllers', [])
     };
 }])
 
-.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicListDelegate', function ($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicListDelegate) {
+.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicListDelegate', '$ionicModal', function ($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicListDelegate, $ionicModal) {
 
     $scope.baseURL = baseURL;
     $scope.dish = {};
@@ -206,6 +206,43 @@ angular.module('conFusion.controllers', [])
         $ionicListDelegate.closeOptionButtons();
         $scope.popover.hide();
     };
+
+    // Create the newComment modal that we will use later
+    $ionicModal.fromTemplateUrl('../templates/dish-comment.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });
+
+    // Triggered in the newComment modal to close it
+    $scope.closeNewComment = function () {
+        $scope.modal.hide();
+    };
+
+    // Open the newComment modal
+    $scope.newComment = function () {
+        $scope.popover.hide();
+
+        $scope.comment = {};
+        $scope.comment.rating = 5;
+        $scope.comment.date = new Date().toISOString();
+        $scope.comment.author = "Noname";
+        $scope.comment.comment = "This dish is\nreally nice!";
+        $scope.modal.show();
+    };
+    
+    $scope.newCommentSubmit = function () {
+        console.log("author: " + $scope.comment.author);
+        console.log("comment: " + $scope.comment.comment);
+        console.log("rating: " + $scope.comment.rating);
+        console.log("date: " + $scope.comment.date);
+
+        // make rating Integer (there is need to sort by rating without mistakes)
+        $scope.comment.rating = parseInt($scope.comment.rating);
+        
+        $scope.dish.comments.push($scope.comment);
+        $scope.closeNewComment();
+    }
 
 }])
 
