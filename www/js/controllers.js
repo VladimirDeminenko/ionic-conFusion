@@ -170,7 +170,7 @@ angular.module('conFusion.controllers', [])
     };
 }])
 
-.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicListDelegate', '$ionicModal', function ($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicListDelegate, $ionicModal) {
+.controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicModal', function ($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicModal) {
 
     $scope.baseURL = baseURL;
     $scope.dish = {};
@@ -196,6 +196,11 @@ angular.module('conFusion.controllers', [])
         $scope.popover = popover;
     });
 
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function () {
+        $scope.popover.remove();
+    });
+
     $scope.openPopover = function ($event) {
         $scope.popover.show($event);
     }
@@ -203,7 +208,6 @@ angular.module('conFusion.controllers', [])
     $scope.addFavorite = function (id) {
         console.log("dish.id is " + id);
         favoriteFactory.addToFavorites(id);
-        $ionicListDelegate.closeOptionButtons();
         $scope.popover.hide();
     };
 
@@ -220,17 +224,19 @@ angular.module('conFusion.controllers', [])
     };
 
     // Open the newComment modal
-    $scope.newComment = function () {
+    $scope.addComment = function () {
         $scope.popover.hide();
 
-        $scope.comment = {};
-        $scope.comment.rating = 5;
-        $scope.comment.date = new Date().toISOString();
-        $scope.comment.author = "Noname";
-        $scope.comment.comment = "This dish is\nreally nice!";
+        $scope.comment = {
+            rating: 5,
+            date: new Date().toISOString(),
+            author: "Noname",
+            comment: "This dish is\nreally nice!"
+        };
+
         $scope.modal.show();
     };
-    
+
     $scope.newCommentSubmit = function () {
         console.log("author: " + $scope.comment.author);
         console.log("comment: " + $scope.comment.comment);
@@ -239,8 +245,10 @@ angular.module('conFusion.controllers', [])
 
         // make rating Integer (there is need to sort by rating without mistakes)
         $scope.comment.rating = parseInt($scope.comment.rating);
-        
+
         $scope.dish.comments.push($scope.comment);
+        menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
+        
         $scope.closeNewComment();
     }
 
