@@ -200,9 +200,8 @@ angular.module('conFusion.controllers', [])
         $scope.popover.show($event);
     }
 
-    $scope.addFavorite = function () {
-        var id = $scope.dish.id;
-        console.log("dish id is " + id);
+    $scope.addFavorite = function (id) {
+        console.log("dish.id is " + id);
         favoriteFactory.addToFavorites(id);
         $ionicListDelegate.closeOptionButtons();
         $scope.popover.hide();
