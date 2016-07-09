@@ -14,11 +14,7 @@
           <span class="col col-offset-75">
             <select ng-model="comment.rating">
               <option selected>{{comment.rating}}</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              <option ng-repeat="rating in [1,2,3,4,5]">{{rating}}</option>
             </select>
           </span>
         </label>

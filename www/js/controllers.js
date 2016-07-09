@@ -245,9 +245,9 @@ angular.module('conFusion.controllers', [])
 
         // make rating Integer (there is need to sort by rating without mistakes)
         $scope.comment.rating = parseInt($scope.comment.rating);
-
+      
         $scope.dish.comments.push($scope.comment);
-        menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
+//        menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
         
         $scope.closeNewComment();
     }

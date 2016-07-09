@@ -1,21 +1,6 @@
 <ion-popover-view>
- <ion-header-bar>
-   Actions
- </ion-header-bar>
   <ion-content>
-    <div class="row">
-      <div class="col col-10"></div>
-      <ion-item class="col col-80" ng-click="addFavorite(dish.id)">
-        Add to Favorites
-      </ion-item>
-      <div class="col col-10"></div>
-    </div>
-    <div class="row">
-      <div class="col col-10"></div>
-      <ion-item class="col col-80" ng-click="addComment()">
-        Add Comment
-      </ion-item>
-      <div class="col col-10"></div>
-    </div>
+    <a class="item" ng-click="addFavorite(dish.id)">Add to Favorites</a>
+    <a class="item" ng-click="addComment()">Add Comment</a>
   </ion-content>
 </ion-popover-view>
