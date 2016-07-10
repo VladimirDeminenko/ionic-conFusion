@@ -229,9 +229,9 @@ angular.module('conFusion.controllers', [])
 
         $scope.comment = {
             rating: 5,
-            date: new Date().toISOString(),
+            comment: "This dish is\nreally nice!",
             author: "Noname",
-            comment: "This dish is\nreally nice!"
+            date: new Date().toISOString()
         };
 
         $scope.modal.show();
