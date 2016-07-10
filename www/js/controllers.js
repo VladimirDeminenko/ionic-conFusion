@@ -190,7 +190,7 @@ angular.module('conFusion.controllers', [])
             }
         );
 
-    $scope.popover = $ionicPopover.fromTemplateUrl('../templates/dish-detail-popover.html', {
+    $scope.popover = $ionicPopover.fromTemplateUrl('templates/dish-detail-popover.html', {
         scope: $scope
     }).then(function (popover) {
         $scope.popover = popover;
@@ -212,7 +212,7 @@ angular.module('conFusion.controllers', [])
     };
 
     // Create the newComment modal that we will use later
-    $ionicModal.fromTemplateUrl('../templates/dish-comment.html', {
+    $ionicModal.fromTemplateUrl('templates/dish-comment.html', {
         scope: $scope
     }).then(function (modal) {
         $scope.modal = modal;
@@ -238,10 +238,7 @@ angular.module('conFusion.controllers', [])
     };
 
     $scope.newCommentSubmit = function () {
-        console.log("author: " + $scope.comment.author);
-        console.log("comment: " + $scope.comment.comment);
-        console.log("rating: " + $scope.comment.rating);
-        console.log("date: " + $scope.comment.date);
+        console.log($scope.comment);
 
         // make rating Integer (there is need to sort by rating without mistakes)
         $scope.comment.rating = parseInt($scope.comment.rating);
