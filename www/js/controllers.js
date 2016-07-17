@@ -11,7 +11,7 @@ angular.module('conFusion.controllers', [])
 
     // Form data for the login modal
     $scope.loginData = $localStorage.getObject('userinfo', '{}');
-    
+
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
