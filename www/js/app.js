@@ -1,5 +1,11 @@
-angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.services'])
-    .run(function ($ionicPlatform, $rootScope, $ionicLoading) {
+angular.module('conFusion', ['ionic', 'ngCordova', 'conFusion.controllers', 'conFusion.services'])
+    .run(function ($ionicPlatform, $rootScope, $ionicLoading, $cordovaSplashscreen, $timeout) {
+        $ionicPlatform.ready(function () {
+            $timeout(function () {
+                $cordovaSplashscreen.hide();
+            }, 20000);
+        });
+
         $rootScope.$on('loading:show', function () {
             $ionicLoading.show({
                 template: '<ion-spinner></ion-spinner> Loading...'
