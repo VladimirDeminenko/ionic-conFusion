@@ -385,7 +385,7 @@ angular.module('conFusion.controllers', [])
 
 }])
 
-.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', '$cordovaVibration', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout, $cordovaVibration) {
+.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', '$cordovaVibration', '$ionicPlatform', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout, $cordovaVibration, $ionicPlatform) {
 
     $scope.baseURL = baseURL;
     $scope.shouldShowDelete = false;
@@ -402,15 +402,17 @@ angular.module('conFusion.controllers', [])
     }
 
     $scope.deleteFavorite = function (index) {
-        
+
         giveSosSignal = function () {
             const SOS = [
                 200, 100, 200, 100, 200, 100,
                 400, 100, 400, 100, 400, 100,
                 200, 100, 200, 100, 200, 100
             ];
-            
-            $cordovaVibration.vibrate(SOS);
+
+            $ionicPlatform.ready(function () {
+                $cordovaVibration.vibrate(SOS);
+            });
         }
 
         var confirmPopup = $ionicPopup.confirm({
@@ -421,8 +423,8 @@ angular.module('conFusion.controllers', [])
         confirmPopup.then(function (res) {
             if (res) {
                 console.log('Ok to delete');
-                favoriteFactory.deleteFromFavorites(index);
                 giveSosSignal();
+                favoriteFactory.deleteFromFavorites(index);
             } else {
                 console.log('Canceled delete');
             }
@@ -430,7 +432,7 @@ angular.module('conFusion.controllers', [])
 
         $scope.shouldShowDelete = false;
     }
-}])
+            }])
 
 .filter('favoriteFilter', function () {
     return function (dishes, favorites) {
