@@ -1,6 +1,6 @@
 angular.module('conFusion.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $localStorage, $ionicPlatform, $cordovaCamera) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $localStorage, $ionicPlatform, $cordovaCamera, $cordovaImagePicker) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -73,7 +73,7 @@ angular.module('conFusion.controllers', [])
         }, 1000);
     };
 
-    
+
     $scope.registration = {};
 
     // Create the registration modal that we will use later
@@ -114,7 +114,7 @@ angular.module('conFusion.controllers', [])
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
         };
-        
+
         $scope.takePicture = function () {
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $scope.registration.imgSrc = "data:image/jpeg;base64," + imageData;
@@ -124,6 +124,23 @@ angular.module('conFusion.controllers', [])
 
             $scope.registerform.show();
 
+        };
+
+        var selectOptions = {
+            maximumImagesCount: 1,
+            width: 100,
+            height: 100,
+            quality: 50
+        };
+        
+        $scope.selectPicture = function () {
+            $cordovaImagePicker.getPictures(selectOptions).then(function (results) {
+                $scope.registration.imgSrc = results[0];
+            }, function (err) {
+                console.log(err);
+            });
+
+            $scope.registerform.show();
         };
     });
 })
@@ -180,7 +197,6 @@ angular.module('conFusion.controllers', [])
             }, function (error) {
                 // error
             });
-        //        });
     };
 }])
 

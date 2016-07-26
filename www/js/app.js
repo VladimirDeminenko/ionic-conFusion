@@ -3,7 +3,7 @@ angular.module('conFusion', ['ionic', 'ngCordova', 'conFusion.controllers', 'con
         $ionicPlatform.ready(function () {
             $timeout(function () {
                 $cordovaSplashscreen.hide();
-            }, 2000);
+            }, 100);
         });
 
         $rootScope.$on('loading:show', function () {
