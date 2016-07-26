@@ -385,7 +385,7 @@ angular.module('conFusion.controllers', [])
 
 }])
 
-.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
+.controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', '$cordovaVibration', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout, $cordovaVibration) {
 
     $scope.baseURL = baseURL;
     $scope.shouldShowDelete = false;
@@ -402,6 +402,16 @@ angular.module('conFusion.controllers', [])
     }
 
     $scope.deleteFavorite = function (index) {
+        
+        giveSosSignal = function () {
+            const SOS = [
+                200, 100, 200, 100, 200, 100,
+                400, 100, 400, 100, 400, 100,
+                200, 100, 200, 100, 200, 100
+            ];
+            
+            $cordovaVibration.vibrate(SOS);
+        }
 
         var confirmPopup = $ionicPopup.confirm({
             title: 'Confirm Delete',
@@ -412,13 +422,13 @@ angular.module('conFusion.controllers', [])
             if (res) {
                 console.log('Ok to delete');
                 favoriteFactory.deleteFromFavorites(index);
+                giveSosSignal();
             } else {
                 console.log('Canceled delete');
             }
         });
 
         $scope.shouldShowDelete = false;
-
     }
 }])
 
