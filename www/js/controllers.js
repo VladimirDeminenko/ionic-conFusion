@@ -249,7 +249,7 @@ angular.module('conFusion.controllers', [])
             }
         };
 }])
-    .controller('DishDetailController', ['$scope', '$stateParams', 'dish', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicPopover', '$ionicModal', function ($scope, $stateParams, dish, menuFactory, favoriteFactory, baseURL, $ionicPopover, $ionicModal) {
+    .controller('DishDetailController', ['$scope', '$stateParams', 'dish', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicPopover', '$ionicModal', '$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast', function ($scope, $stateParams, dish, menuFactory, favoriteFactory, baseURL, $ionicPopover, $ionicModal, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
 
         $scope.baseURL = baseURL;
 
@@ -270,10 +270,31 @@ angular.module('conFusion.controllers', [])
             $scope.popover.show($event);
         }
 
-        $scope.addFavorite = function (id) {
-            console.log("dish.id is " + id);
-            favoriteFactory.addToFavorites(id);
+        $scope.addFavorite = function (index) {
+            console.log("dish.id is " + index);
+            favoriteFactory.addToFavorites(index);
             $scope.popover.hide();
+
+            $ionicPlatform.ready(function () {
+                $cordovaLocalNotification.schedule({
+                    id: 1,
+                    title: "Added Favorite",
+                    text: $scope.dish.name
+                }).then(function () {
+                        console.log('Added Favorite ' + $scope.dish.name);
+                    },
+                    function () {
+                        console.log('Failed to add Notification ');
+                    });
+
+                $cordovaToast
+                    .show('Added Favorite ' + $scope.dish.name, 'short', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            });
         };
 
         // Create the newComment modal that we will use later
